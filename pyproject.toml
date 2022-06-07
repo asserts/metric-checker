@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "metric-checker"
+version = "0.1.0"
+description = ""
+authors = ["Alex Ramos <aramos@asserts.ai>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+click = "^8.1.3"
+requests = "^2.27.1"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
