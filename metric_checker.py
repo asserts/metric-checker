@@ -17,15 +17,19 @@ queries = [
 
 
 @click.command()
-@click.option('--host', 'host', required=True,
+@click.option('--host', 'host', required=True, envvar='PROMETHEUS_HOST',
               default='http://localhost:9090', help='The prometheus host to query.')
-@click.option('--samples', 'samples', required=True,
+@click.option('--samples', 'samples', required=True, envvar='SAMPLES',
               default=5, help='The number of metrics samples to query via topk().')
 def check_metrics(host, samples):
     client = QueryClient(host)
 
     for query in queries:
-        endpoint = f'{INSTANT_QUERY}topk({samples}, {query})'
+        if query == 'up':
+            endpoint = f'{INSTANT_QUERY}{query}'
+        else:
+            endpoint = f'{INSTANT_QUERY}topk({samples}, {query})'
+
         response = client.handle_request(endpoint, 'GET')
         pprint(response)
 

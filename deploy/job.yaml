@@ -1,0 +1,18 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: metric-checker
+spec:
+  ttlSecondsAfterFinished: 180
+  template:
+    spec:
+      containers:
+      - name: metric-checker
+        image: asserts/metric-checker:v0.1.0
+        command:
+          - python
+          - metric_checker.py
+          - --host
+          - http://prometheus-server.default.svc.cluster.local:9090
+      restartPolicy: Never
+  backoffLimit: 1
