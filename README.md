@@ -14,7 +14,7 @@ use by Asserts to verify whether metrics structure is compatible with an Asserts
 ### Docker
 
 ```sh
-$ docker run -it -e PROMETHEUS_HOST=http://prometheus-host.example.com asserts/metric-checker:latest
+docker run -it -e PROMETHEUS_HOST=http://prometheus-host.example.com asserts/metric-checker:latest
 ```
 
 Which will print the results to stdout.
