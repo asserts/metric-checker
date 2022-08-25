@@ -1,12 +1,13 @@
 import json
 import requests
 from requests.exceptions import RequestException, HTTPError
+from base64 import b64encode
 
 
 class QueryClient:
     """QueryClient for making http requests"""
 
-    def __init__(self, host):
+    def __init__(self, host, username, password):
         """
         Args:
             host (str): The host to make queries against
@@ -17,6 +18,8 @@ class QueryClient:
         """
 
         self.host = host
+        self.username = username
+        self.password = password
         self.headers = {}
 
     def set_header(self, key, val):
@@ -46,6 +49,10 @@ class QueryClient:
         url = self.host + endpoint
         try:
             print(f'Performing method={request_type} for client={self.__class__.__name__} at url={url}')
+
+            if self.username is not None and self.password is not None:
+                self.set_header('Authorization', "Basic {}".format(
+                    b64encode(bytes(f"{self.username}:{self.password}", "utf-8")).decode("ascii")))
 
             if request_type == 'GET':
                 self.set_header('Content-Type', 'application/json')
