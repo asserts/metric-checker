@@ -19,10 +19,14 @@ queries = [
 @click.command()
 @click.option('--host', 'host', required=True, envvar='PROMETHEUS_HOST',
               default='http://localhost:9090', help='The prometheus host to query.')
+@click.option('--username', 'username', required=False, envvar='PROMETHEUS_USERNAME',
+              default='http://localhost:9090', help='The prometheus username')
+@click.option('--password', 'password', required=False, envvar='PROMETHEUS_PASSWORD',
+              default='http://localhost:9090', help='The prometheus password')
 @click.option('--samples', 'samples', required=True, envvar='SAMPLES',
               default=5, help='The number of metrics samples to query via topk().')
-def check_metrics(host, samples):
-    client = QueryClient(host)
+def check_metrics(host, username, password, samples):
+    client = QueryClient(host, username, password)
 
     for query in queries:
         if query == 'up':
